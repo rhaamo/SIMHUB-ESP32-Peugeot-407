@@ -61,8 +61,7 @@ SHCustomProtocol shCustomProtocol;
 unsigned long lastMatrixRefresh = 0;
 
 void idle(bool critical) {
-	// Maybe ? Maybe not ?
-	// shCustomProtocol.idle();
+	shCustomProtocol.idle();
 }
 
 void buttonStatusChanged(int buttonId, byte Status) {
@@ -85,10 +84,6 @@ void setup()
 #if CONNECTION_TYPE != SERIAL
 	ECrowneDataProxy::setup(&outgoingStream, &incomingStream);
 #endif
-
-	//#ifdef INCLUDE_TEMPGAUGE
-	//	shTEMPPIN.SetValue((int)80);
-	//#endif
 
 	FlowSerialBegin(19200);
 

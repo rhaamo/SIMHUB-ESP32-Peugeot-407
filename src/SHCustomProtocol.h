@@ -40,11 +40,12 @@ public:
   void setup() {
 		// Set LED on GPIO2 as OUTPUT
 		pinMode(2, OUTPUT);
+		digitalWrite(2, LOW);
 		
 		// 10, 10 = queues config
 		if (ESP32Can.begin(ESP32Can.convertSpeed(125), CAN_TX, CAN_RX, 10, 10)) {
 			// CAN bus init OK
-			digitalWrite(2, HIGH);
+			// digitalWrite(2, HIGH);
 		}
 		// mcp2515.reset();
 		// mcp2515.setBitrate(CAN_125KBPS, MCP_8MHZ);
@@ -100,39 +101,78 @@ public:
     canMsg5.data[0] = ((handbrake * 4) & 0xFF);
   }
 
+	void tryReadFrame() {
+		CanFrame rxFrame;
+		if (ESP32Can.readFrame(rxFrame, 0)) {
+			digitalWrite(2, HIGH);
+		}
+	}
+
   // Called once per arduino loop, timing can't be predicted,
   // but it's called between each command sent to the arduino
   void loop() {
     // send can messages to the dashboard
-		// put led off if we have an error while writing the CAN frame
+		//// put led off if we have an error while writing the CAN frame
 
 		canMsg1.data[0] = 0x86;
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
 		canMsg1.data[0] = 0x86;
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
 		canMsg1.data[0] = 0x8E;
     if (!ESP32Can.writeFrame(canMsg1)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
+
+		canMsg2.data[4] = 0x11;
     if (!ESP32Can.writeFrame(canMsg2)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
+		canMsg2.data[4] = 0x10;
+    if (!ESP32Can.writeFrame(canMsg2)) {
+			// digitalWrite(2, LOW);
+		}
+		tryReadFrame();
+		canMsg2.data[4] = 0x01;
+    if (!ESP32Can.writeFrame(canMsg2)) {
+			// digitalWrite(2, LOW);
+		}
+		tryReadFrame();
+
+
     if (!ESP32Can.writeFrame(canMsg3)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
     if (!ESP32Can.writeFrame(canMsg4)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
     if (!ESP32Can.writeFrame(canMsg5)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
     if (!ESP32Can.writeFrame(canMsg6)) {
-			digitalWrite(2, LOW);
+			// digitalWrite(2, LOW);
 		}
+		tryReadFrame();
+
+		if (!ESP32Can.writeFrame(canMsg7)) {
+			// digitalWrite(2, LOW);
+		}
+		tryReadFrame();
+
+		if (!ESP32Can.writeFrame(canMsg8)) {
+			// digitalWrite(2, LOW);
+		}
+		tryReadFrame();
 
 		// mcp2515.sendMessage(&canMsg1);
     // mcp2515.sendMessage(&canMsg1);

@@ -6,6 +6,8 @@ CanFrame canMsg3; // 0x0B6
 CanFrame canMsg4; // 0x128
 CanFrame canMsg5; // 0x168
 CanFrame canMsg6; // 0x161
+CanFrame canMsg7; // 0x228
+CanFrame canMsg8; // 0x3F6
 
 // struct can_frame canMsg1; // 0x0F6
 // struct can_frame canMsg2; // 0x036
@@ -27,12 +29,12 @@ void carregaCAN() {
   canMsg1.extd = 0;
   canMsg1.data_length_code = 8;
   canMsg1.data[0] = 0x8E; // ignition 86=134, 8E=142
-  // canMsg1.data[0] = 0x48; // ignition 86=134, 8E=142
-  canMsg1.data[1] = 0x00; // coolant temp 64=100, A0=160
+  // canMsg1.data[0] = 0x86; // ignition 86=134, 8E=142
+  canMsg1.data[1] = 0x64; // coolant temp 64=100, A0=160
   canMsg1.data[2] = 0x00; // odometer 1
   canMsg1.data[3] = 0x00; // odometer 2
   canMsg1.data[4] = 0x00; // odometer 3
-  canMsg1.data[5] = 0x10; // ???
+  canMsg1.data[5] = 0x08; // 10
   canMsg1.data[6] = 0x63; // temperature round(T/2.0-39.5) / 0...250 = -40...+85 / 63=99
   canMsg1.data[7] = 0x20; // reverse gear light + turn right/left on last bits / 20=100000
 
@@ -48,9 +50,9 @@ void carregaCAN() {
   canMsg2.data[0] = 0x00; // ???
   canMsg2.data[1] = 0x00; // ???
   canMsg2.data[2] = 0x00; // economy mode enabled
-  canMsg2.data[3] = 0x25; // dashboard lighting enabled
+  canMsg2.data[3] = 0x2F; // 25 dashboard lighting enabled
   canMsg2.data[4] = 0x01; // ignition mode. 001 on, 010 off, 011 unknown
-  canMsg2.data[5] = 0x00; // ???
+  canMsg2.data[5] = 0x80; // ???
   canMsg2.data[6] = 0x00; // ???
   canMsg2.data[7] = 0xA0; // ???
 
@@ -63,12 +65,12 @@ void carregaCAN() {
   canMsg3.identifier = 0x0B6;
   canMsg3.extd = 0;
   canMsg3.data_length_code = 8;
-  canMsg3.data[0] = 0x00; // tach rpm / D9=217
+  canMsg3.data[0] = 0xD9; // tach rpm / D9=217
   canMsg3.data[1] = 0x00; // ???
-  canMsg3.data[2] = 0x00; // actual speed * 100 in km/h / 65=101
-  canMsg3.data[3] = 0x00; // ??
+  canMsg3.data[2] = 0x65; // actual speed * 100 in km/h / 65=101
+  canMsg3.data[3] = 0x8F; // ??
   canMsg3.data[4] = 0x00; // odometer from start, cm
-  canMsg3.data[5] = 0x00; // ??
+  canMsg3.data[5] = 0xFF; // ??
   canMsg3.data[6] = 0x00; // fuel consumption, counter
   canMsg3.data[7] = 0xA0; // ??? A0=160
 
@@ -85,9 +87,9 @@ void carregaCAN() {
   canMsg4.data[2] = 0x00; // ???
   canMsg4.data[3] = 0x00; // ???
   canMsg4.data[4] = 0x00; // (lights ?)
-  canMsg4.data[5] = 0x00; // low fuel level
+  canMsg4.data[5] = 0xA0; // low fuel level
   canMsg4.data[6] = 0x00; // seat belts blinks
-  canMsg4.data[7] = 0x01; // dashboard backlighting
+  canMsg4.data[7] = 0x00; // 01 dashboard backlighting
 
   // commandes combinés témoins
   // canMsg5.can_id = 0x168;
@@ -102,7 +104,7 @@ void carregaCAN() {
   canMsg5.data[1] = 0x00;
   canMsg5.data[2] = 0x00;
   canMsg5.data[3] = 0x00; // abs e esp
-  canMsg5.data[4] = 0x00; // 02=2
+  canMsg5.data[4] = 0x02; // 02=2
   canMsg5.data[5] = 0x00;
   canMsg5.data[6] = 0x00;
   canMsg5.data[7] = 0x00;
@@ -120,9 +122,37 @@ void carregaCAN() {
   canMsg6.data_length_code = 7;
   canMsg6.data[0] = 0x00;
   canMsg6.data[1] = 0x00;
-  canMsg6.data[2] = 0x00; // D7=215, 98 ?
-  canMsg6.data[3] = 0x00; // fuel level? 00..64=00..100
+  canMsg6.data[2] = 0xD7; // D7=215, 98 ?
+  canMsg6.data[3] = 0x64; // fuel level? 00..64=00..100
   canMsg6.data[4] = 0x00;
   canMsg6.data[5] = 0x00;
   canMsg6.data[6] = 0x00;
+
+  // 80 00 80 80 00 00 00 00 
+  // https://autowp.github.io/#228
+  canMsg7.identifier = 0x228;
+  canMsg7.extd = 0;
+  canMsg7.data_length_code = 8;
+  canMsg7.data[0] = 0x80;
+  canMsg7.data[1] = 0x00;
+  canMsg7.data[2] = 0x80;
+  canMsg7.data[3] = 0x80;
+  canMsg7.data[4] = 0x00;
+  canMsg7.data[5] = 0x00;
+  canMsg7.data[6] = 0x00;
+  canMsg7.data[7] = 0x00;
+
+  // 00 00 00 00 00 C0 00 
+  // https://autowp.github.io/#3F6
+  canMsg8.identifier = 0x3F6;
+  canMsg8.extd = 0;
+  canMsg8.data_length_code = 7;
+  canMsg8.data[0] = 0x00;
+  canMsg8.data[1] = 0x00;
+  canMsg8.data[2] = 0x00;
+  canMsg8.data[3] = 0x00;
+  canMsg8.data[4] = 0x00;
+  canMsg8.data[5] = 0x00;
+  canMsg8.data[6] = 0xC0;
+  canMsg8.data[7] = 0x00;
 }
