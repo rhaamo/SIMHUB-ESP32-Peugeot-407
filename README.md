@@ -6,6 +6,7 @@ Based on:
 
 Doesn't really seems to work, probably missing some can magic...
 If an ESP32RET is put on the other end the log seems ok, the cluster just doesn't like the frames or something is missing.
+Also `ESP32Can.writeFrame` quickly returns false but with an ESP32RET on the end, it still sends frames properly.... 
 
 The magic is in `SHCustomProtocol.h` and `can.h` where the packets are defined and some debug infos put in.
 

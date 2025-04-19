@@ -27,6 +27,7 @@ void carregaCAN() {
   canMsg1.extd = 0;
   canMsg1.data_length_code = 8;
   canMsg1.data[0] = 0x8E; // ignition 86=134, 8E=142
+  // canMsg1.data[0] = 0x48; // ignition 86=134, 8E=142
   canMsg1.data[1] = 0x00; // coolant temp 64=100, A0=160
   canMsg1.data[2] = 0x00; // odometer 1
   canMsg1.data[3] = 0x00; // odometer 2
