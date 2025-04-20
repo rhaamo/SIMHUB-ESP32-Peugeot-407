@@ -36,6 +36,8 @@ public:
 
   */
 
+  int brightness = 0x2F;
+
   // Called when starting the arduino (setup method in main sketch)
   void setup() {
 		// Set LED on GPIO2 as OUTPUT
@@ -61,7 +63,7 @@ public:
     int rpm = (FlowSerialReadStringUntil(';').toInt()) * 0.031286; // adjust the number to match to your dashboard
     int fuel = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
     int wtemp = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
-    int oiltemp = (FlowSerialReadStringUntil(';').toInt()); // TODO
+    int oiltemp = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
     int handbrake = (FlowSerialReadStringUntil(';').toInt());
     int leftblink = (FlowSerialReadStringUntil(';').toInt());
     int rightblink = (FlowSerialReadStringUntil(';').toInt());
@@ -72,6 +74,8 @@ public:
     int lowBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
     int highBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
 
+    // brightness    
+    canMsg2.data[3] = (brightness & 0xFF);
     // rpm
     canMsg3.data[0] = (rpm & 0xFF);
     // speed
@@ -82,6 +86,8 @@ public:
     canMsg6.data[3] = (fuel & 0xff);
     // water temp
     canMsg1.data[1] = (wtemp & 0xff);
+    // oil temp
+    canMsg6.data[2] = (oiltemp & 0xff);
     // tc and abs
     canMsg5.data[3] = ((esp * 16) + (babs * 32) & 0xff);
     // park brake
@@ -119,6 +125,15 @@ public:
         Serial2.printf(" %02X", rxFrame.data[i]);
       }
       Serial2.printf("\r\n");
+
+      if (rxFrame.identifier == 0x217) {
+        if (brightness != rxFrame.data[0]) {
+          // Doesn't work so idk... maybe timing issue with all the tryReadFrame?
+          // and the cluster doesn't have time to ack with the right brightness
+          // brightness = rxFrame.data[0];
+          // Serial2.printf("Brightness changed from button %02x (%i)\r\n", brightness, brightness);
+        }
+      }
 		}
 	}
 

@@ -102,8 +102,8 @@ void carregaCAN() {
   canMsg6.data_length_code = 7;
   canMsg6.data[0] = 0x00;
   canMsg6.data[1] = 0x00;
-  canMsg6.data[2] = 0x00; // D7=215, 98 ?
-  canMsg6.data[3] = 0x00; // fuel level? 00..64=00..100
+  canMsg6.data[2] = 0x00; // oil temp - D7=215, 98 ?
+  canMsg6.data[3] = 0x00; // fuel level - 00..64=00..100
   canMsg6.data[4] = 0x00;
   canMsg6.data[5] = 0x00;
   canMsg6.data[6] = 0x00;

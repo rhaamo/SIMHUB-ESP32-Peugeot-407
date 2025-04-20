@@ -56,8 +56,8 @@ return `${gameID};${cluster};${speed};${rpms};${fuel};${waterTemp};${oilTemperat
 # Peugeot 407
 Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
 
-- [ ] Water temp (L gauge)
-- [ ] Oil temp (R gauge)
+- [x] Water temp (L gauge) (works but need calibration)
+- [x] Oil temp (R gauge) (works but need calibration)
 - [x] RPM
 - [x] Speed
 - [x] Tank level (need cal?)
