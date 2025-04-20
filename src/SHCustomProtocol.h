@@ -109,10 +109,37 @@ public:
     canMsg5.data[0] = ((handbrake * 4) & 0xFF);
   }
 
+  // Some frames received from the dashboard:
+  // Initially (probably because "not init"):
+  // id: 217, len: 8:, data: 92 10 00 00 00 FF 00 7F
+  // Then:
+  // id: 217, len: 8:, data: 92 00 00 00 00 FF FF FF
+  // Changed to when pressed check/0000:
+  // id: 217, len: 8:, data: 92 20 00 00 00 FF 00 7F
+  // Then back to:
+  // id: 217, len: 8:, data: 92 00 00 00 00 FF FF FF
+  // Pressing the +/- button sends:
+  // id: 217, len: 8:, data: A2 00 00 00 00 FF FF FF
+  // With the first data element cycling through:
+  // 02 12 22 32 42 52 62 72 82 92 A2 B2 C2 D2 E2 F2
+  //  2 18 34 40            ...                   242
+  // So for ID 217:
+  // DATA1=brightness
+  // DATA2=00 when showing the big gear indication in the middle, =20 when showing it on the top right
+  // DATA7=FF when showing the big gear indication in the middle, =00 when showing it on the top right
+  // DATA8=FF when showing the big gear indication in the middle, =7F when showing it on the top right
+  // DATA6,7,8 could be related to the odometer ?
+  // DATA2,3,4,5 starts increasing or moving as soon as the cluster starts doing stuff (like moving the needles)
+
 	void tryReadFrame() {
 		CanFrame rxFrame;
 		if (ESP32Can.readFrame(rxFrame, 0)) {
 			digitalWrite(2, HIGH);
+      Serial2.printf("Received CAN frame id: %03X, len: %i:, data:", rxFrame.identifier, rxFrame.data_length_code);
+      for (int i=0; i<rxFrame.data_length_code; i++) {
+        Serial2.printf(" %02X", rxFrame.data[i]);
+      }
+      Serial2.printf("\r\n");
 		}
 	}
 

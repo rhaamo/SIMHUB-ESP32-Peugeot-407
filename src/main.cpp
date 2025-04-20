@@ -85,7 +85,13 @@ void setup()
 	ECrowneDataProxy::setup(&outgoingStream, &incomingStream);
 #endif
 
+	// Main SimHub serial
 	FlowSerialBegin(19200);
+
+	// For debugging purposes
+	Serial2.begin(115200);
+
+	Serial2.println("meow :3");
 
 	shCustomProtocol.setup();
 	arqserial.setIdleFunction(idle);
