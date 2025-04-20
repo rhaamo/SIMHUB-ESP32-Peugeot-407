@@ -38,9 +38,9 @@ void carregaCAN() {
   canMsg2.data[0] = 0x00; // ???
   canMsg2.data[1] = 0x00; // ???
   canMsg2.data[2] = 0x00; // economy mode enabled
-  canMsg2.data[3] = 0x25; // dashboard lighting enabled
+  canMsg2.data[3] = 0x2F; // dashboard lighting (level ?)
   canMsg2.data[4] = 0x01; // ignition mode. 001 on, 010 off, 011 unknown
-  canMsg2.data[5] = 0x80; // ???
+  canMsg2.data[5] = 0x00; // ???
   canMsg2.data[6] = 0x00; // ???
   canMsg2.data[7] = 0xA0; // ???
 
@@ -71,9 +71,9 @@ void carregaCAN() {
   canMsg4.data[2] = 0x00; // ???
   canMsg4.data[3] = 0x00; // ???
   canMsg4.data[4] = 0x00; // (lights ?)
-  canMsg4.data[5] = 0x00; // low fuel level
+  canMsg4.data[5] = 0xA0; // low fuel level /!\ dash doesn't init if not 0xA0 ?
   canMsg4.data[6] = 0x00; // seat belts blinks
-  canMsg4.data[7] = 0x01; // dashboard backlighting
+  canMsg4.data[7] = 0x00; // 01 dashboard backlighting
 
   // commandes combinés témoins
   // 00 00 00 00 00 00 00 00 
@@ -86,7 +86,7 @@ void carregaCAN() {
   canMsg5.data[1] = 0x00;
   canMsg5.data[2] = 0x00;
   canMsg5.data[3] = 0x00; // abs e esp
-  canMsg5.data[4] = 0x00; // 02=2
+  canMsg5.data[4] = 0x00;
   canMsg5.data[5] = 0x00;
   canMsg5.data[6] = 0x00;
   canMsg5.data[7] = 0x00;
