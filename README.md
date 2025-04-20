@@ -8,6 +8,7 @@ Some references:
 - https://github.com/gilles504/simhub_psa_can_arduino
 - https://github.com/fmiglior/simhub-psa-dashboard
 - https://autowp.github.io/
+- https://www.youtube.com/watch?v=q42XOnm4GwQ (talks about some "magic unlock" that I should already be doing...)
 
 Doesn't really seems to work, probably missing some can magic...
 If an ESP32RET is put on the other end the log seems ok, the cluster just doesn't like the frames or something is missing.
