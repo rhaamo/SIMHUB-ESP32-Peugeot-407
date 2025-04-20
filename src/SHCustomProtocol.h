@@ -71,6 +71,15 @@ public:
 */
 
     // read the simhub protocol and store on variables
+    // SpeedKmh float
+    // Rpms float
+    // DataCorePlugin.Computed.Fuel_Percent float 
+    // WaterTemperature float
+    // Handbrake int 0/100
+    // TurnIndicatorLeft 0/1
+    // TurnIndicatorRight 0/1
+    // TCActive 0/1?
+    // ABSActive 0/1?
     // use this protocol: format([SpeedKmh],0)+';'+format([Rpms],0)+';'+format([DataCorePlugin.Computed.Fuel_Percent],0)+';'+ format([WaterTemperature],0)+';'
 		// + [Handbrake] +';' + [TurnIndicatorLeft] +';'+ [TurnIndicatorRight]  +';'+ [TCActive] +';' + [ABSActive] + '\n'
 
