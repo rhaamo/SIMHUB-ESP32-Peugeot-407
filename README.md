@@ -32,10 +32,10 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
 
 - [ ] Water temp (L gauge)
 - [ ] Oil temp (R gauge)
-- [ ] RPM
-- [ ] Speed
+- [x] RPM
+- [x] Speed
 - [ ] Tank level
-- [ ] LCD (XXX)
+- [ ] LCD
  - [ ] Total distance
  - [ ] Trip distance
  - [ ] Gearbox indicator
@@ -49,10 +49,10 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
 - [ ] Indicators (warnings)
  - [ ] front seat belts
  - [ ] fuel level
- - [ ] left turn
+ - [x] left turn
 - [ ] Indicators (warnings)
   - [ ] parking brake
-  - [ ] right turn
+  - [x] right turn
 - [ ] Indicators (warning)
   - [ ] emission control system
   - [ ] ABS

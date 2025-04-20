@@ -89,7 +89,6 @@ public:
     // speed
     canMsg3.data[2] = (vel & 0xFF);
     // blinks
-
     canMsg4.data[4] = ((leftblink * 2) + (rightblink * 4) & 0xFF);
     // fuel
     canMsg6.data[3] = (fuel & 0xff);
@@ -114,6 +113,7 @@ public:
     // send can messages to the dashboard
 		//// put led off if we have an error while writing the CAN frame
 
+    // Water temp
 		if (!ESP32Can.writeFrame(canMsg1)) {
 			// digitalWrite(2, LOW);
 		}
@@ -122,33 +122,43 @@ public:
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
+
     if (!ESP32Can.writeFrame(canMsg2)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
 
+    // Speed, RPM
     if (!ESP32Can.writeFrame(canMsg3)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
+
+    // Blinkers
     if (!ESP32Can.writeFrame(canMsg4)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
+
+    // ESP, ABS, Park brake
     if (!ESP32Can.writeFrame(canMsg5)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
+
+    // Fuel
     if (!ESP32Can.writeFrame(canMsg6)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
 
+    // idk
 		if (!ESP32Can.writeFrame(canMsg7)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
 
+    // idk
 		if (!ESP32Can.writeFrame(canMsg8)) {
 			// digitalWrite(2, LOW);
 		}
