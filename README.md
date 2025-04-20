@@ -15,6 +15,8 @@ BUT REMOVES THE 120R RESISTOR ! It's the one that is right on top of CANH/L pins
 
 Connect TX=D5 and RX=D4.
 
+Use TX2 (pins D16&D17) on an external FTDI to uses the Serial2 output (will shows received frames, and later more infos on what the fw is doing).
+
 # SimHub
 
 Uses the following NCalc code:
