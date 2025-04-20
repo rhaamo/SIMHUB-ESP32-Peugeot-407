@@ -3,12 +3,7 @@
 Based on:
 - code base from https://github.com/eCrowneEng/ESP-SimHub
 - cluster CAN code from https://github.com/fmiglior/simhub-psa-dashboard
-
-Some references:
-- https://github.com/gilles504/simhub_psa_can_arduino
-- https://github.com/fmiglior/simhub-psa-dashboard
 - https://autowp.github.io/
-- https://www.youtube.com/watch?v=q42XOnm4GwQ (talks about some "magic unlock" that I should already be doing...)
 
 The magic is in `SHCustomProtocol.h` and `can.h` where the packets are defined and some debug infos put in.
 
