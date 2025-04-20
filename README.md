@@ -17,6 +17,11 @@ Connect TX=D5 and RX=D4.
 
 Use TX2 (pins D16&D17) on an external FTDI to uses the Serial2 output (will shows received frames, and later more infos on what the fw is doing).
 
+# TODO
+
+Fix the various issues with some parts (gearbox speed for ex.).
+Make the CAN messages more modular (to handle multiple clusters with only one firmware).
+
 # SimHub
 
 Uses the following custom protocol JAVASCRIPT code:

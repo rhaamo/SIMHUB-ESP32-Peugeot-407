@@ -8,6 +8,8 @@ CanFrame canMsg5; // 0x168
 CanFrame canMsg6; // 0x161
 CanFrame canMsg7; // 0x228
 CanFrame canMsg8; // 0x3F6
+CanFrame canMsg9; // 0x1A1
+CanFrame canMsg10; // 0x1A8
 
 
 void carregaCAN() {
@@ -20,7 +22,7 @@ void carregaCAN() {
   canMsg1.extd = 0;
   canMsg1.data_length_code = 8;
   canMsg1.data[0] = 0x8E; // ignition 86=134, 8E=142
-  canMsg1.data[1] = 0x00; // coolant temp 64=100, A0=160
+  canMsg1.data[1] = 0x00; // *SH* coolant temp 64=100, A0=160
   canMsg1.data[2] = 0x00; // odometer 1
   canMsg1.data[3] = 0x00; // odometer 2
   canMsg1.data[4] = 0x00; // odometer 3
@@ -38,7 +40,7 @@ void carregaCAN() {
   canMsg2.data[0] = 0x00; // ???
   canMsg2.data[1] = 0x00; // ???
   canMsg2.data[2] = 0x00; // economy mode enabled
-  canMsg2.data[3] = 0x2F; // dashboard lighting (level ?)
+  canMsg2.data[3] = 0x2F; // *SH* dashboard lighting (level ?)
   canMsg2.data[4] = 0x01; // ignition mode. 001 on, 010 off, 011 unknown
   canMsg2.data[5] = 0x00; // ???
   canMsg2.data[6] = 0x00; // ???
@@ -51,9 +53,9 @@ void carregaCAN() {
   canMsg3.identifier = 0x0B6;
   canMsg3.extd = 0;
   canMsg3.data_length_code = 8;
-  canMsg3.data[0] = 0x00; // tach rpm / D9=217
+  canMsg3.data[0] = 0x00; // *SH* tach rpm / D9=217
   canMsg3.data[1] = 0x00; // ???
-  canMsg3.data[2] = 0x00; // actual speed * 100 in km/h / 65=101
+  canMsg3.data[2] = 0x00; // *SH* actual speed * 100 in km/h / 65=101
   canMsg3.data[3] = 0x00; // ??
   canMsg3.data[4] = 0x00; // odometer from start, cm
   canMsg3.data[5] = 0x00; // ??
@@ -62,18 +64,20 @@ void carregaCAN() {
 
   // signal commands/dash lights
   // 00 00 00 00 00 A0 00 00 
+  // neutral: 20 00 00 00 00 A0 20 00 
+  // speed 1: 20 00 00 00 00 A0 90 C0 
   // https://autowp.github.io/#128
   canMsg4.identifier = 0x128;
   canMsg4.extd = 0;
   canMsg4.data_length_code = 8;
-  canMsg4.data[0] = 0x00; // driver seat belt warning + parking break
+  canMsg4.data[0] = 0x00; // ???
   canMsg4.data[1] = 0x00; // any door or trunk open
   canMsg4.data[2] = 0x00; // ???
   canMsg4.data[3] = 0x00; // ???
-  canMsg4.data[4] = 0x00; // (lights ?)
+  canMsg4.data[4] = 0x00; // *SH* lights
   canMsg4.data[5] = 0xA0; // low fuel level /!\ dash doesn't init if not 0xA0 ?
-  canMsg4.data[6] = 0x00; // seat belts blinks
-  canMsg4.data[7] = 0x00; // 01 dashboard backlighting
+  canMsg4.data[6] = 0x00; // *SH* gearbox speed
+  canMsg4.data[7] = 0x00; // 0xC0 will display a - on the LCD
 
   // commandes combinés témoins
   // 00 00 00 00 00 00 00 00 
@@ -82,10 +86,10 @@ void carregaCAN() {
   canMsg5.identifier = 0x168;
   canMsg5.extd = 0;
   canMsg5.data_length_code = 8;
-  canMsg5.data[0] = 0x00;
+  canMsg5.data[0] = 0x00; // *SH* parking light
   canMsg5.data[1] = 0x00;
   canMsg5.data[2] = 0x00;
-  canMsg5.data[3] = 0x00; // abs e esp
+  canMsg5.data[3] = 0x00; // *SH* abs e esp
   canMsg5.data[4] = 0x00;
   canMsg5.data[5] = 0x00;
   canMsg5.data[6] = 0x00;
@@ -102,8 +106,8 @@ void carregaCAN() {
   canMsg6.data_length_code = 7;
   canMsg6.data[0] = 0x00;
   canMsg6.data[1] = 0x00;
-  canMsg6.data[2] = 0x00; // oil temp - D7=215, 98 ?
-  canMsg6.data[3] = 0x00; // fuel level - 00..64=00..100
+  canMsg6.data[2] = 0x00; // *SH* oil temp - D7=215, 98 ?
+  canMsg6.data[3] = 0x00; // *SH* fuel level - 00..64=00..100
   canMsg6.data[4] = 0x00;
   canMsg6.data[5] = 0x00;
   canMsg6.data[6] = 0x00;
@@ -135,4 +139,34 @@ void carregaCAN() {
   canMsg8.data[5] = 0x00;
   canMsg8.data[6] = 0xC0;
   canMsg8.data[7] = 0x00;
+  
+  // 00 40 C6 00 00 00 00 00
+  // 80 40 C6 00 00 00 00 00
+  // 00 E0 C6 00 00 00 00 00
+  // https://autowp.github.io/#1A1
+  canMsg9.identifier = 0x1A1;
+  canMsg9.extd = 0;
+  canMsg9.data_length_code = 7;
+  canMsg9.data[0] = 0x00;
+  canMsg9.data[1] = 0xE0;
+  canMsg9.data[2] = 0xC6;
+  canMsg9.data[3] = 0x00;
+  canMsg9.data[4] = 0x00;
+  canMsg9.data[5] = 0x00;
+  canMsg9.data[6] = 0x00;
+  canMsg9.data[7] = 0x00;
+  
+  // 80 00 00 00 00 00 A0 00
+  // https://autowp.github.io/#1A8
+  canMsg10.identifier = 0x1A8;
+  canMsg10.extd = 0;
+  canMsg10.data_length_code = 7;
+  canMsg10.data[0] = 0x80; // 0X80
+  canMsg10.data[1] = 0x00; // varies
+  canMsg10.data[2] = 0x00; // varies
+  canMsg10.data[3] = 0x00;
+  canMsg10.data[4] = 0x00;
+  canMsg10.data[5] = 0x00;
+  canMsg10.data[6] = 0xA0;
+  canMsg10.data[7] = 0x00;
 }

@@ -17,7 +17,6 @@ public:
   SEE https://github.com/zegreatclan/SimHub/wiki/Custom-Arduino-hardware-support
 
   GENERAL RULES :
-          - ALWAYS BACKUP THIS FILE, reinstalling/updating SimHub would overwrite it with the default version.
           - Read data AS FAST AS POSSIBLE in the read function
           - NEVER block the arduino (using delay for instance)
           - Make sure the data read in "read()" function READS ALL THE DATA from the serial port matching the custom protocol definition
@@ -77,20 +76,28 @@ public:
     int canGear = 0x00;
     if (strcmp(gear, "R") == 0) {
       canGear = 0x10;
+      // 20 00 00 00 00 A0 10 00 
     } else if (strcmp(gear, "N") == 0) {
-      canGear = 0x00;
+      canGear = 0x20; // not 0x00 ?
+      // 20 00 00 00 00 A0 20 00 
     } else if (strcmp(gear, "1") == 0) {
       canGear = 0x90;
+      // 20 00 00 00 00 A0 90 C0 
     } else if (strcmp(gear, "2") == 0) {
       canGear = 0x80;
+      // 20 00 00 00 00 A0 80 C0 
     } else if (strcmp(gear, "3") == 0) {
       canGear = 0x70;
+      // 20 00 00 00 00 A0 70 C0 
     } else if (strcmp(gear, "4") == 0) {
       canGear = 0x60;
+      // 20 00 00 00 00 A0 60 C0 
     } else if (strcmp(gear, "5") == 0) {
       canGear = 0x50;
+      // 20 00 00 00 00 A0 50 C0 
     } else if (strcmp(gear, "6") == 0) {
       canGear = 0x40;
+      // 20 00 00 00 00 A0 40 C0 
     }
 
     // brightness    
@@ -101,6 +108,8 @@ public:
     canMsg3.data[2] = (vel & 0xFF);
     // blinks + headlights
     canMsg4.data[4] = (leftblink << 1) + (rightblink << 2) + (highBeam << 5) + (lowBeam << 6);
+    // doesn't work, maybe there is a flag needed to instruct the cluster to display the gearbox ?
+    canMsg4.data[6] = canGear;
     // fuel
     canMsg6.data[3] = (fuel & 0xff);
     // water temp
@@ -208,6 +217,18 @@ public:
 
     // idk
 		if (!ESP32Can.writeFrame(canMsg8)) {
+			// Serial2.println("Error sending CAN frame");
+		}
+		tryReadFrame();		
+    
+    // idk
+		if (!ESP32Can.writeFrame(canMsg9)) {
+			// Serial2.println("Error sending CAN frame");
+		}
+		tryReadFrame();	
+    
+    // idk
+		if (!ESP32Can.writeFrame(canMsg10)) {
 			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();		
