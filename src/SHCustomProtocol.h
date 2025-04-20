@@ -128,6 +128,16 @@ public:
     if (!ESP32Can.writeFrame(canMsg1)) {
 			// digitalWrite(2, LOW);
 		}
+		// tryReadFrame();
+    // canMsg1.data[0] = 0x0000008A;
+    // if (!ESP32Can.writeFrame(canMsg1)) {
+		// 	// digitalWrite(2, LOW);
+		// }
+		tryReadFrame();
+    canMsg1.data[0] = 0x8A;
+    if (!ESP32Can.writeFrame(canMsg1)) {
+			// digitalWrite(2, LOW);
+		}
 		tryReadFrame();
 
 		canMsg2.data[4] = 0x11;

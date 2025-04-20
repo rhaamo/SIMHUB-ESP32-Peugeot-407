@@ -4,6 +4,11 @@ Based on:
 - code base from https://github.com/eCrowneEng/ESP-SimHub
 - cluster CAN code from https://github.com/fmiglior/simhub-psa-dashboard
 
+Some references:
+- https://github.com/gilles504/simhub_psa_can_arduino
+- https://github.com/fmiglior/simhub-psa-dashboard
+- https://autowp.github.io/
+
 Doesn't really seems to work, probably missing some can magic...
 If an ESP32RET is put on the other end the log seems ok, the cluster just doesn't like the frames or something is missing.
 Also `ESP32Can.writeFrame` quickly returns false but with an ESP32RET on the end, it still sends frames properly.... 
