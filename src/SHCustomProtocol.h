@@ -45,53 +45,32 @@ public:
 		// 10, 10 = queues config
 		if (ESP32Can.begin(ESP32Can.convertSpeed(125), CAN_TX, CAN_RX, 10, 10)) {
 			// CAN bus init OK
-			// digitalWrite(2, HIGH);
+			Serial2.println("CAN init OK");
 		}
-		// mcp2515.reset();
-		// mcp2515.setBitrate(CAN_125KBPS, MCP_8MHZ);
-		// mcp2515.setNormalMode();
-
     carregaCAN(); // load can msg pack on can.h
   }
 
   // Called when new data is coming from computer
   void read() {
-    // EXAMPLE 1 - read the whole message and sent it back to simhub as debug message
-    // Protocol formula can be set in simhub to anything, it will just echo it
-    // -------------------------------------------------------
-    //	String message = FlowSerialReadStringUntil('\n');
-    //	FlowSerialDebugPrintLn("Message received : " + message);
-
-    /*
-    // -------------------------------------------------------
-    // EXAMPLE 2 - reads speed and gear from the message
-    // Protocol formula must be set in simhub to
-    // format([DataCorePlugin.GameData.NewData.SpeedKmh],'0') + ';' + isnull([DataCorePlugin.GameData.NewData.Gear],'N')
-    // -------------------------------------------------------
-*/
-
     // read the simhub protocol and store on variables
-    // SpeedKmh float
-    // Rpms float
-    // DataCorePlugin.Computed.Fuel_Percent float 
-    // WaterTemperature float
-    // Handbrake int 0/100
-    // TurnIndicatorLeft 0/1
-    // TurnIndicatorRight 0/1
-    // TCActive 0/1?
-    // ABSActive 0/1?
-    // use this protocol: format([SpeedKmh],0)+';'+format([Rpms],0)+';'+format([DataCorePlugin.Computed.Fuel_Percent],0)+';'+ format([WaterTemperature],0)+';'
-		// + [Handbrake] +';' + [TurnIndicatorLeft] +';'+ [TurnIndicatorRight]  +';'+ [TCActive] +';' + [ABSActive] + '\n'
-
+    int gameID = (FlowSerialReadStringUntil(';').toInt()); // Game "ID" if we have any specific stuff to do
+    // 0=default, 1=ETS2/ATS; 2=BeamNgDrive; 3=AssettoCorsa
+    int cluster = (FlowSerialReadStringUntil(';').toInt()); // Cluster ID
+    // 0=Peugeot 407
     int vel = (FlowSerialReadStringUntil(';').toInt()) * 0.390909; // adjust the number to match to your dashboard
     int rpm = (FlowSerialReadStringUntil(';').toInt()) * 0.031286; // adjust the number to match to your dashboard
     int fuel = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
     int wtemp = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
+    int oiltemp = (FlowSerialReadStringUntil(';').toInt()); // TODO
     int handbrake = (FlowSerialReadStringUntil(';').toInt());
     int leftblink = (FlowSerialReadStringUntil(';').toInt());
     int rightblink = (FlowSerialReadStringUntil(';').toInt());
     int esp = (FlowSerialReadStringUntil(';').toInt());
-    int babs = (FlowSerialReadStringUntil('\n').toInt());
+    int babs = (FlowSerialReadStringUntil(';').toInt());
+    String gear = FlowSerialReadStringUntil(';'); // R, N, 1-x TODO
+    int parkingLight = (FlowSerialReadStringUntil(';').toInt()); // TODO
+    int lowBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
+    int highBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
 
     // rpm
     canMsg3.data[0] = (rpm & 0xFF);
@@ -147,67 +126,57 @@ public:
   // but it's called between each command sent to the arduino
   void loop() {
     // send can messages to the dashboard
-		//// put led off if we have an error while writing the CAN frame
 
     // Water temp
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     if (!ESP32Can.writeFrame(canMsg2)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Speed, RPM
     if (!ESP32Can.writeFrame(canMsg3)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Blinkers
     if (!ESP32Can.writeFrame(canMsg4)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // ESP, ABS, Park brake
     if (!ESP32Can.writeFrame(canMsg5)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Fuel
     if (!ESP32Can.writeFrame(canMsg6)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // idk
 		if (!ESP32Can.writeFrame(canMsg7)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // idk
 		if (!ESP32Can.writeFrame(canMsg8)) {
-			// digitalWrite(2, LOW);
+			Serial2.println("Error sending CAN frame");
 		}
-		tryReadFrame();
-
-		// mcp2515.sendMessage(&canMsg1);
-    // mcp2515.sendMessage(&canMsg1);
-    // mcp2515.sendMessage(&canMsg2);
-    // mcp2515.sendMessage(&canMsg3);
-    // mcp2515.sendMessage(&canMsg4);
-    // mcp2515.sendMessage(&canMsg5);
-    // mcp2515.sendMessage(&canMsg6);
-		
+		tryReadFrame();		
   }
 
   // Called once between each byte read on arduino,

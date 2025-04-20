@@ -1,14 +1,5 @@
 #include <Arduino.h>
 #include <EspSimHub.h>
-// #include <mcp2515.h>
-
-// INT 
-// SCK 18
-// SI  23
-// SO  19
-// CS  5
-// spi_device_handle_t spi;
-// MCP2515 mcp2515(&spi); //CS pin on arduino
 
 /**
  * Enable ESP-NOW or WiFi or use Serial

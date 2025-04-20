@@ -19,9 +19,38 @@ Use TX2 (pins D16&D17) on an external FTDI to uses the Serial2 output (will show
 
 # SimHub
 
-Uses the following NCalc code:
-```text
-format([SpeedKmh],0)+';'+format([Rpms],0)+';'+format([DataCorePlugin.Computed.Fuel_Percent],0)+';'+ format([WaterTemperature],0)+';'+ [Handbrake] +';' + [TurnIndicatorLeft] +';'+ [TurnIndicatorRight] +';'+ [TCActive] +';' + [ABSActive] + '\n'
+Uses the following custom protocol JAVASCRIPT code:
+```javascript
+// Game specific
+var game = $prop('DataCorePlugin.CurrentGame');
+var gameID = 0; // no specifics
+if (game == 'ETS2' || game == 'ATS') {
+	gameID = 1;
+} else if (game == 'BeamNgDrive') {
+	gameID = 2;
+} else if (game == 'AssettoCorsa') {
+	gameID = 3;
+}
+// Cluster
+var cluster = 0; // Peugeot 407
+
+// Game datas
+var speed = format($prop('SpeedKmh'), 0);
+var rpms = format($prop('Rpms'), 0);
+var fuel = format($prop('DataCorePlugin.Computed.Fuel_Percent'), 0);
+var waterTemp = format($prop('WaterTemperature'), 0);
+var oilTemperature = format($prop('OilTemperature'), 0);
+var handbrake = $prop('Handbrake');
+var turnLeft = $prop('TurnIndicatorLeft');
+var turnRight = $prop('TurnIndicatorRight');
+var tcActive = $prop('TCActive');
+var absActive = $prop('ABSActive');
+var gear = $prop('Gear');
+var parkingLight = $prop('DataCorePlugin.GameRawData.light_Parkingbrake');
+var lowBeam = $prop('DataCorePlugin.GameRawData.light_LowBeam');
+var highBeam = $prop('DataCorePlugin.GameRawData.light_HighBeam');
+
+return `${gameID};${cluster};${speed};${rpms};${fuel};${waterTemp};${oilTemperature};${handbrake};${turnLeft};${turnRight};${tcActive};${absActive};${gear};${parkingLight};${lowBeam};${highBeam};\n`
 ```
 
 # Peugeot 407
@@ -31,7 +60,7 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
 - [ ] Oil temp (R gauge)
 - [x] RPM
 - [x] Speed
-- [ ] Tank level
+- [x] Tank level (need cal?)
 - [ ] LCD
  - [ ] Total distance
  - [ ] Trip distance
@@ -52,7 +81,7 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
   - [x] right turn
 - [ ] Indicators (warning)
   - [ ] emission control system
-  - [ ] ABS
+  - [ ] ABS (might work, need test/checks)
   - [ ] passenger airbag
   - [ ] pre-heat (diesel)
 - [ ] Lighting levels

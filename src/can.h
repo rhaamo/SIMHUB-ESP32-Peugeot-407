@@ -9,18 +9,9 @@ CanFrame canMsg6; // 0x161
 CanFrame canMsg7; // 0x228
 CanFrame canMsg8; // 0x3F6
 
-// struct can_frame canMsg1; // 0x0F6
-// struct can_frame canMsg2; // 0x036
-// struct can_frame canMsg3; // 0x0B6
-// struct can_frame canMsg4; // 0x128
-// struct can_frame canMsg5; // 0x168
-// struct can_frame canMsg6; // 0x161
-
 
 void carregaCAN() {
   // slow BSI datas
-  // canMsg1.can_id = 0x0F6;
-  // canMsg1.can_dlc = 8;
   // 86 00 00 00 00 08 63 20 
   // 86 64 00 00 00 08 63 20 
   // 8E A0 00 00 00 08 63 20 
@@ -29,7 +20,6 @@ void carregaCAN() {
   canMsg1.extd = 0;
   canMsg1.data_length_code = 8;
   canMsg1.data[0] = 0x8E; // ignition 86=134, 8E=142
-  // canMsg1.data[0] = 0x86; // ignition 86=134, 8E=142
   canMsg1.data[1] = 0x64; // coolant temp 64=100, A0=160
   canMsg1.data[2] = 0x00; // odometer 1
   canMsg1.data[3] = 0x00; // odometer 2
@@ -39,8 +29,6 @@ void carregaCAN() {
   canMsg1.data[7] = 0x20; // reverse gear light + turn right/left on last bits / 20=100000
 
   // BSI commands
-  // canMsg2.can_id = 0x036;
-  // canMsg2.can_dlc = 8;
   // 00 00 06 2F 00 80 00 00 
   // 00 00 06 2F 01 80 00 00 
   // https://autowp.github.io/#036
@@ -57,8 +45,6 @@ void carregaCAN() {
   canMsg2.data[7] = 0xA0; // ???
 
   // fast BSI datas
-  // canMsg3.can_id = 0x0B6;
-  // canMsg3.can_dlc = 8;
   // 00 00 00 00 00 FF 00 A0 
   // D9 00 65 8F 00 FF 00 A0 
   // https://autowp.github.io/#0B6
@@ -75,8 +61,6 @@ void carregaCAN() {
   canMsg3.data[7] = 0xA0; // ??? A0=160
 
   // signal commands/dash lights
-  // canMsg4.can_id = 0x128;
-  // canMsg4.can_dlc = 8;
   // 00 00 00 00 00 A0 00 00 
   // https://autowp.github.io/#128
   canMsg4.identifier = 0x128;
@@ -92,8 +76,6 @@ void carregaCAN() {
   canMsg4.data[7] = 0x00; // 01 dashboard backlighting
 
   // commandes combinés témoins
-  // canMsg5.can_id = 0x168;
-  // canMsg5.can_dlc = 8;
   // 00 00 00 00 00 00 00 00 
   // 00 00 00 00 02 00 00 00 
   // https://autowp.github.io/#168
@@ -111,8 +93,6 @@ void carregaCAN() {
 
   // Combustivel
   // état BSI temp niveaux
-  // canMsg6.can_id = 0x161;
-  // canMsg6.can_dlc = 7;
   // 00 00 00 00 00 00 00 
   // 00 00 D7 64 00 00 00 
   // 00 00 62 00 00 00 00 
