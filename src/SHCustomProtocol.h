@@ -114,48 +114,18 @@ public:
     // send can messages to the dashboard
 		//// put led off if we have an error while writing the CAN frame
 
-		canMsg1.data[0] = 0x86;
 		if (!ESP32Can.writeFrame(canMsg1)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
-		canMsg1.data[0] = 0x86;
 		if (!ESP32Can.writeFrame(canMsg1)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
-		canMsg1.data[0] = 0x8E;
-    if (!ESP32Can.writeFrame(canMsg1)) {
-			// digitalWrite(2, LOW);
-		}
-		// tryReadFrame();
-    // canMsg1.data[0] = 0x0000008A;
-    // if (!ESP32Can.writeFrame(canMsg1)) {
-		// 	// digitalWrite(2, LOW);
-		// }
-		tryReadFrame();
-    canMsg1.data[0] = 0x8A;
-    if (!ESP32Can.writeFrame(canMsg1)) {
-			// digitalWrite(2, LOW);
-		}
-		tryReadFrame();
-
-		canMsg2.data[4] = 0x11;
     if (!ESP32Can.writeFrame(canMsg2)) {
 			// digitalWrite(2, LOW);
 		}
 		tryReadFrame();
-		canMsg2.data[4] = 0x10;
-    if (!ESP32Can.writeFrame(canMsg2)) {
-			// digitalWrite(2, LOW);
-		}
-		tryReadFrame();
-		canMsg2.data[4] = 0x01;
-    if (!ESP32Can.writeFrame(canMsg2)) {
-			// digitalWrite(2, LOW);
-		}
-		tryReadFrame();
-
 
     if (!ESP32Can.writeFrame(canMsg3)) {
 			// digitalWrite(2, LOW);

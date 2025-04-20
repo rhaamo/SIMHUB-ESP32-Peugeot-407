@@ -10,15 +10,13 @@ Some references:
 - https://autowp.github.io/
 - https://www.youtube.com/watch?v=q42XOnm4GwQ (talks about some "magic unlock" that I should already be doing...)
 
-Doesn't really seems to work, probably missing some can magic...
-If an ESP32RET is put on the other end the log seems ok, the cluster just doesn't like the frames or something is missing.
-Also `ESP32Can.writeFrame` quickly returns false but with an ESP32RET on the end, it still sends frames properly.... 
-
 The magic is in `SHCustomProtocol.h` and `can.h` where the packets are defined and some debug infos put in.
 
 In the repository is a log from a working bus made with savvy can...
 
 This is made to use one of the smol 3.3V CAN transceiver since the ESP32 already have a CAN controller builtin.
+
+BUT REMOVES THE 120R RESISTOR ! It's the one that is right on top of CANH/L pins. With it it won't work.
 
 Connect TX=D5 and RX=D4.
 
@@ -28,3 +26,39 @@ Uses the following NCalc code:
 ```text
 format([SpeedKmh],0)+';'+format([Rpms],0)+';'+format([DataCorePlugin.Computed.Fuel_Percent],0)+';'+ format([WaterTemperature],0)+';'+ [Handbrake] +';' + [TurnIndicatorLeft] +';'+ [TurnIndicatorRight] +';'+ [TCActive] +';' + [ABSActive] + '\n'
 ```
+
+# Peugeot 407
+Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
+
+- [ ] Water temp (L gauge)
+- [ ] Oil temp (R gauge)
+- [ ] RPM
+- [ ] Speed
+- [ ] Tank level
+- [ ] LCD (XXX)
+ - [ ] Total distance
+ - [ ] Trip distance
+ - [ ] Gearbox indicator
+ - [ ] Speed limit/cruise control
+ - [ ] Other/Warnings
+- [ ] Indicators (lighting)
+ - [ ] main beam
+ - [ ] dipped beam
+ - [ ] front fog
+ - [ ] rear fog
+- [ ] Indicators (warnings)
+ - [ ] front seat belts
+ - [ ] fuel level
+ - [ ] left turn
+- [ ] Indicators (warnings)
+  - [ ] parking brake
+  - [ ] right turn
+- [ ] Indicators (warning)
+  - [ ] emission control system
+  - [ ] ABS
+  - [ ] passenger airbag
+  - [ ] pre-heat (diesel)
+- [ ] Lighting levels
+- [ ] Buttons
+  - [ ] Lighting
+  - [ ] Reset
