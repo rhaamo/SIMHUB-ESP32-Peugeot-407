@@ -63,20 +63,20 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
 - [x] Speed
 - [x] Tank level (need cal?)
 - [ ] LCD
- - [ ] Total distance
- - [ ] Trip distance
- - [ ] Gearbox indicator
- - [ ] Speed limit/cruise control
- - [ ] Other/Warnings
+  - [ ] Total distance
+  - [ ] Trip distance
+  - [ ] Gearbox indicator
+  - [ ] Speed limit/cruise control
+  - [ ] Other/Warnings
 - [ ] Indicators (lighting)
- - [x] main beam
- - [x] dipped beam
- - [ ] front fog
- - [ ] rear fog
+  - [x] main beam
+  - [x] dipped beam
+  - [ ] front fog
+  - [ ] rear fog
 - [ ] Indicators (warnings)
- - [ ] front seat belts
- - [ ] fuel level
- - [x] left turn
+  - [ ] front seat belts
+  - [ ] fuel level
+  - [x] left turn
 - [x] Indicators (warnings)
   - [x] parking brake
   - [x] right turn
