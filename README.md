@@ -40,12 +40,13 @@ var rpms = format($prop('Rpms'), 0);
 var fuel = format($prop('DataCorePlugin.Computed.Fuel_Percent'), 0);
 var waterTemp = format($prop('WaterTemperature'), 0);
 var oilTemperature = format($prop('OilTemperature'), 0);
-var handbrake = $prop('Handbrake');
+var handbrake = format($prop('Handbrake'), 0);
 var turnLeft = $prop('TurnIndicatorLeft');
 var turnRight = $prop('TurnIndicatorRight');
 var tcActive = $prop('TCActive');
 var absActive = $prop('ABSActive');
 var gear = $prop('Gear');
+// TODO check if the same value in ETS2/forza for ex
 var parkingLight = $prop('DataCorePlugin.GameRawData.light_Parkingbrake');
 var lowBeam = $prop('DataCorePlugin.GameRawData.light_LowBeam');
 var highBeam = $prop('DataCorePlugin.GameRawData.light_HighBeam');

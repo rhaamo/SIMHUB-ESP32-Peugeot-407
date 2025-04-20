@@ -64,15 +64,15 @@ public:
     int fuel = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
     int wtemp = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
     int oiltemp = (FlowSerialReadStringUntil(';').toInt()) * 1.28;
-    int handbrake = (FlowSerialReadStringUntil(';').toInt());
+    int handbrake = (FlowSerialReadStringUntil(';').toInt()); // idk what to do with that since we use the on/off parkingLight
     int leftblink = (FlowSerialReadStringUntil(';').toInt());
     int rightblink = (FlowSerialReadStringUntil(';').toInt());
     int esp = (FlowSerialReadStringUntil(';').toInt());
     int babs = (FlowSerialReadStringUntil(';').toInt());
     String gear = FlowSerialReadStringUntil(';'); // R, N, 1-x TODO
-    int parkingLight = (FlowSerialReadStringUntil(';').toInt()); // TODO
-    int lowBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
-    int highBeam = (FlowSerialReadStringUntil(';').toInt()); // TODO
+    int parkingLight = (FlowSerialReadStringUntil(';').toInt());
+    int lowBeam = (FlowSerialReadStringUntil(';').toInt());
+    int highBeam = (FlowSerialReadStringUntil(';').toInt());
 
     // brightness    
     canMsg2.data[3] = (brightness & 0xFF);
@@ -91,7 +91,7 @@ public:
     // tc and abs
     canMsg5.data[3] = ((esp * 16) + (babs * 32) & 0xff);
     // park brake
-    canMsg5.data[0] = ((handbrake * 4) & 0xFF);
+    canMsg5.data[0] = (parkingLight << 2);
   }
 
   // Some frames received from the dashboard:
