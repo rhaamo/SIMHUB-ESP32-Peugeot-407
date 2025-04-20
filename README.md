@@ -77,12 +77,12 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
  - [ ] front seat belts
  - [ ] fuel level
  - [x] left turn
-- [ ] Indicators (warnings)
-  - [ ] parking brake
+- [x] Indicators (warnings)
+  - [x] parking brake
   - [x] right turn
 - [ ] Indicators (warning)
   - [ ] emission control system
-  - [ ] ABS (might work, need test/checks)
+  - [x] ABS
   - [ ] passenger airbag
   - [ ] pre-heat (diesel)
 - [ ] Lighting levels

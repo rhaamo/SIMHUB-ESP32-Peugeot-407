@@ -69,10 +69,29 @@ public:
     int rightblink = (FlowSerialReadStringUntil(';').toInt());
     int esp = (FlowSerialReadStringUntil(';').toInt());
     int babs = (FlowSerialReadStringUntil(';').toInt());
-    String gear = FlowSerialReadStringUntil(';'); // R, N, 1-x TODO
+    const char *gear = FlowSerialReadStringUntil(';').c_str(); // R, N, 1-x TODO
     int parkingLight = (FlowSerialReadStringUntil(';').toInt());
     int lowBeam = (FlowSerialReadStringUntil(';').toInt());
     int highBeam = (FlowSerialReadStringUntil(';').toInt());
+
+    int canGear = 0x00;
+    if (strcmp(gear, "R") == 0) {
+      canGear = 0x10;
+    } else if (strcmp(gear, "N") == 0) {
+      canGear = 0x00;
+    } else if (strcmp(gear, "1") == 0) {
+      canGear = 0x90;
+    } else if (strcmp(gear, "2") == 0) {
+      canGear = 0x80;
+    } else if (strcmp(gear, "3") == 0) {
+      canGear = 0x70;
+    } else if (strcmp(gear, "4") == 0) {
+      canGear = 0x60;
+    } else if (strcmp(gear, "5") == 0) {
+      canGear = 0x50;
+    } else if (strcmp(gear, "6") == 0) {
+      canGear = 0x40;
+    }
 
     // brightness    
     canMsg2.data[3] = (brightness & 0xFF);
