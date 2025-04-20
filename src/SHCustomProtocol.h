@@ -129,52 +129,52 @@ public:
 
     // Water temp
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 		if (!ESP32Can.writeFrame(canMsg1)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     if (!ESP32Can.writeFrame(canMsg2)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Speed, RPM
     if (!ESP32Can.writeFrame(canMsg3)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Blinkers
     if (!ESP32Can.writeFrame(canMsg4)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // ESP, ABS, Park brake
     if (!ESP32Can.writeFrame(canMsg5)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // Fuel
     if (!ESP32Can.writeFrame(canMsg6)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // idk
 		if (!ESP32Can.writeFrame(canMsg7)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();
 
     // idk
 		if (!ESP32Can.writeFrame(canMsg8)) {
-			Serial2.println("Error sending CAN frame");
+			// Serial2.println("Error sending CAN frame");
 		}
 		tryReadFrame();		
   }
