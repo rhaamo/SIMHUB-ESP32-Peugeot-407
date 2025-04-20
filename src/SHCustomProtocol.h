@@ -72,6 +72,7 @@ public:
     int parkingLight = (FlowSerialReadStringUntil(';').toInt());
     int lowBeam = (FlowSerialReadStringUntil(';').toInt());
     int highBeam = (FlowSerialReadStringUntil(';').toInt());
+    int ignition = (FlowSerialReadStringUntil(';').toInt());
 
     int canGear = 0x00;
     if (strcmp(gear, "R") == 0) {

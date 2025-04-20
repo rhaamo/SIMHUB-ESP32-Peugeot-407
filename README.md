@@ -55,18 +55,22 @@ var gear = $prop('Gear');
 var parkingLight = $prop('DataCorePlugin.GameRawData.light_Parkingbrake');
 var lowBeam = $prop('DataCorePlugin.GameRawData.light_LowBeam');
 var highBeam = $prop('DataCorePlugin.GameRawData.light_HighBeam');
+var ignition = $prop('DataCorePlugin.GameData.EngineIgnitionOn');
 
-return `${gameID};${cluster};${speed};${rpms};${fuel};${waterTemp};${oilTemperature};${handbrake};${turnLeft};${turnRight};${tcActive};${absActive};${gear};${parkingLight};${lowBeam};${highBeam};\n`
+return `${gameID};${cluster};${speed};${rpms};${fuel};${waterTemp};${oilTemperature};${handbrake};${turnLeft};${turnRight};${tcActive};${absActive};${gear};${parkingLight};${lowBeam};${highBeam};${ignition};\n`
 ```
 
 # Peugeot 407
 Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
+
+Could also work with a Citroen C3 Phase 
 
 - [x] Water temp (L gauge) (works but need calibration)
 - [x] Oil temp (R gauge) (works but need calibration)
 - [x] RPM
 - [x] Speed
 - [x] Tank level (need cal?)
+- [ ] Ignition (cluster on/off I guess)
 - [ ] LCD
   - [ ] Total distance
   - [ ] Trip distance
