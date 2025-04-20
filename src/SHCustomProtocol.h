@@ -72,7 +72,7 @@ public:
     int parkingLight = (FlowSerialReadStringUntil(';').toInt());
     int lowBeam = (FlowSerialReadStringUntil(';').toInt());
     int highBeam = (FlowSerialReadStringUntil(';').toInt());
-    int ignition = (FlowSerialReadStringUntil(';').toInt());
+    int sh_ignition = (FlowSerialReadStringUntil(';').toInt());
 
     int canGear = 0x00;
     if (strcmp(gear, "R") == 0) {
@@ -100,9 +100,19 @@ public:
       canGear = 0x40;
       // 20 00 00 00 00 A0 40 C0 
     }
+    
+    // Now set the CAN frames content
 
     // brightness    
     canMsg2.data[3] = (brightness & 0xFF);
+    // ignition
+    if (sh_ignition == 0) {
+      canMsg2.data[4] = 0x01; // 1
+      canMsg4.data[5] = 0x00;
+    } else {
+      canMsg2.data[4] = 0x10; // 16
+      canMsg4.data[5] = 0xA0;
+    }
     // rpm
     canMsg3.data[0] = (rpm & 0xFF);
     // speed
@@ -149,11 +159,14 @@ public:
 		CanFrame rxFrame;
 		if (ESP32Can.readFrame(rxFrame, 0)) {
 			digitalWrite(2, HIGH);
-      Serial2.printf("Received CAN frame id: %03X, len: %i:, data:", rxFrame.identifier, rxFrame.data_length_code);
-      for (int i=0; i<rxFrame.data_length_code; i++) {
-        Serial2.printf(" %02X", rxFrame.data[i]);
+      // Avoid spamming...
+      if (rxFrame.identifier != 0x217) {
+        Serial2.printf("Received CAN frame id: %03X, len: %i:, data:", rxFrame.identifier, rxFrame.data_length_code);
+        for (int i=0; i<rxFrame.data_length_code; i++) {
+          Serial2.printf(" %02X", rxFrame.data[i]);
+        }
+        Serial2.printf("\r\n");
       }
-      Serial2.printf("\r\n");
 
       if (rxFrame.identifier == 0x217) {
         if (brightness != rxFrame.data[0]) {
@@ -163,6 +176,10 @@ public:
           // Serial2.printf("Brightness changed from button %02x (%i)\r\n", brightness, brightness);
         }
       }
+
+      // There is also:
+      // id: 51F, len: 8:, data: 01 00 AC 00 04 00 00 00
+      // id: 317, len: 8:, data: F0 00 82 88 40 10 00 00
 		}
 	}
 

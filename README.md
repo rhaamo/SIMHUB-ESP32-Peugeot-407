@@ -70,7 +70,7 @@ Could also work with a Citroen C3 Phase.
 - [x] RPM
 - [x] Speed
 - [x] Tank level (need cal?)
-- [ ] Ignition (cluster on/off I guess)
+- [x] Ignition (cluster on/off I guess)
 - [ ] LCD
   - [ ] Total distance
   - [ ] Trip distance
