@@ -68,8 +68,8 @@ Tested with a Phase 1 (2008) cluster, in KM/h with RPM gauge up to 6k.
  - [ ] Speed limit/cruise control
  - [ ] Other/Warnings
 - [ ] Indicators (lighting)
- - [ ] main beam
- - [ ] dipped beam
+ - [x] main beam
+ - [x] dipped beam
  - [ ] front fog
  - [ ] rear fog
 - [ ] Indicators (warnings)

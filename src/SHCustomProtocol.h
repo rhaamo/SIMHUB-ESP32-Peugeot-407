@@ -80,8 +80,8 @@ public:
     canMsg3.data[0] = (rpm & 0xFF);
     // speed
     canMsg3.data[2] = (vel & 0xFF);
-    // blinks
-    canMsg4.data[4] = ((leftblink * 2) + (rightblink * 4) & 0xFF);
+    // blinks + headlights
+    canMsg4.data[4] = (leftblink << 1) + (rightblink << 2) + (highBeam << 5) + (lowBeam << 6);
     // fuel
     canMsg6.data[3] = (fuel & 0xff);
     // water temp
